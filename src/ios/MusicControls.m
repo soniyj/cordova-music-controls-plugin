@@ -207,7 +207,7 @@ MusicControlsInfo * musicControlsSettings;
     
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
       //only available in iOS 9.1 and up.
-       // MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+        MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
         //[commandCenter.changePlaybackPositionCommand setEnabled:true];
         //[commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
 
@@ -253,7 +253,7 @@ MusicControlsInfo * musicControlsSettings;
     [self setLatestEventCallbackId:nil];
 
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
-        //MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+        MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
         //[commandCenter.changePlaybackPositionCommand setEnabled:false];
         //[commandCenter.changePlaybackPositionCommand removeTarget:self action:NULL];
 
