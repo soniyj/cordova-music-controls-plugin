@@ -205,11 +205,11 @@ MusicControlsInfo * musicControlsSettings;
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMusicControlsNotification:) name:@"musicControlsEventNotification" object:nil];
     
-    //if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
       //only available in iOS 9.1 and up.
-        MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-        [commandCenter.changePlaybackPositionCommand setEnabled:true];
-        [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
+       // MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+        //[commandCenter.changePlaybackPositionCommand setEnabled:true];
+        //[commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
 
         if (musicControlsSettings.hasNext) {
           MPRemoteCommand *nextTrackCommand = [commandCenter nextTrackCommand];
@@ -236,7 +236,7 @@ MusicControlsInfo * musicControlsSettings;
           [skipBackwardIntervalCommand setEnabled:YES];
           [skipBackwardIntervalCommand addTarget:self action:@selector(skipBackwardEvent:)];
         }
-   // }
+    } 
 }
 
 - (MPRemoteCommandHandlerStatus)changedThumbSliderOnLockScreen:(MPChangePlaybackPositionCommandEvent *)event {
@@ -252,17 +252,17 @@ MusicControlsInfo * musicControlsSettings;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedEvent" object:nil];
     [self setLatestEventCallbackId:nil];
 
-   // if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
-        MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-        [commandCenter.changePlaybackPositionCommand setEnabled:false];
-        [commandCenter.changePlaybackPositionCommand removeTarget:self action:NULL];
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
+        //MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+        //[commandCenter.changePlaybackPositionCommand setEnabled:false];
+        //[commandCenter.changePlaybackPositionCommand removeTarget:self action:NULL];
 
         [commandCenter.skipForwardCommand removeTarget:self];
         [commandCenter.skipBackwardCommand removeTarget:self];
 
         [commandCenter.nextTrackCommand removeTarget:self];
         [commandCenter.previousTrackCommand removeTarget:self];
-  //  }
+    }
 }
 
 - (void) dealloc {
