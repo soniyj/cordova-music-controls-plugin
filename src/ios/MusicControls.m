@@ -204,7 +204,7 @@ MusicControlsInfo * musicControlsSettings;
 - (void) registerMusicControlsEventListener {
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMusicControlsNotification:) name:@"musicControlsEventNotification" object:nil];
-    
+    /*
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
       //only available in iOS 9.1 and up.
         MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
@@ -236,7 +236,7 @@ MusicControlsInfo * musicControlsSettings;
           [skipBackwardIntervalCommand setEnabled:YES];
           [skipBackwardIntervalCommand addTarget:self action:@selector(skipBackwardEvent:)];
         }
-    } 
+    } */
 }
 
 - (MPRemoteCommandHandlerStatus)changedThumbSliderOnLockScreen:(MPChangePlaybackPositionCommandEvent *)event {
@@ -251,7 +251,7 @@ MusicControlsInfo * musicControlsSettings;
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedEvent" object:nil];
     [self setLatestEventCallbackId:nil];
-
+/*
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
         MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
         //[commandCenter.changePlaybackPositionCommand setEnabled:false];
@@ -262,7 +262,7 @@ MusicControlsInfo * musicControlsSettings;
 
         [commandCenter.nextTrackCommand removeTarget:self];
         [commandCenter.previousTrackCommand removeTarget:self];
-    }
+    } */
 }
 
 - (void) dealloc {
