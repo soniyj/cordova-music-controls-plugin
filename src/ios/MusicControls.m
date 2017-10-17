@@ -213,7 +213,7 @@ MusicControlsInfo * musicControlsSettings;
 
         //maybe we need to ENABLE Play/Pause for it to work!?
         commandCenter.playCommand.enabled = YES;
-        [commandCenter.playCommand addTarget:self action:@selector(play)];
+        //[commandCenter.playCommand addTarget:self action:@selector(play)];
 
         if (musicControlsSettings.hasNext) {
           MPRemoteCommand *nextTrackCommand = [commandCenter nextTrackCommand];
@@ -262,7 +262,7 @@ MusicControlsInfo * musicControlsSettings;
         [commandCenter.changePlaybackPositionCommand removeTarget:self action:NULL];
 
         commandCenter.playCommand.enabled = NO;
-        [commandCenter.playCommand removeTarget:self action:NULL];
+        //[commandCenter.playCommand removeTarget:self action:NULL];
 
         [commandCenter.skipForwardCommand removeTarget:self];
         [commandCenter.skipBackwardCommand removeTarget:self];
