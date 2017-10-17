@@ -212,7 +212,7 @@ MusicControlsInfo * musicControlsSettings;
         [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
 
         //maybe we need to ENABLE Play/Pause for it to work!?
-        [commandCenter.playCommand setEnabled:true];
+        commandCenter.playCommand.enabled = YES;
         [commandCenter.playCommand addTarget:self action:@selector(play)];
 
         if (musicControlsSettings.hasNext) {
@@ -261,7 +261,7 @@ MusicControlsInfo * musicControlsSettings;
         [commandCenter.changePlaybackPositionCommand setEnabled:false];
         [commandCenter.changePlaybackPositionCommand removeTarget:self action:NULL];
 
-        [commandCenter.playCommand setEnabled:false];
+        commandCenter.playCommand.enabled = NO;
         [commandCenter.playCommand removeTarget:self action:NULL];
 
         [commandCenter.skipForwardCommand removeTarget:self];
