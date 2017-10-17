@@ -211,10 +211,6 @@ MusicControlsInfo * musicControlsSettings;
         [commandCenter.changePlaybackPositionCommand setEnabled:true];
         [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
 
-        //maybe we need to ENABLE Play/Pause for it to work!?
-        commandCenter.playCommand.enabled = YES;
-        //[commandCenter.playCommand addTarget:self action:@selector(play)];
-
         if (musicControlsSettings.hasNext) {
           MPRemoteCommand *nextTrackCommand = [commandCenter nextTrackCommand];
           [nextTrackCommand setEnabled:YES];
@@ -240,6 +236,10 @@ MusicControlsInfo * musicControlsSettings;
           [skipBackwardIntervalCommand setEnabled:YES];
           [skipBackwardIntervalCommand addTarget:self action:@selector(skipBackwardEvent:)];
         }
+
+        //maybe we need to ENABLE Play/Pause for it to work!?
+        MPRemoteCommand *togglePlayPauseCommand; = [commandCenter togglePlayPauseCommand;];
+        [togglePlayPauseCommand setEnabled:YES];
     } 
 }
 
@@ -261,8 +261,7 @@ MusicControlsInfo * musicControlsSettings;
         [commandCenter.changePlaybackPositionCommand setEnabled:false];
         [commandCenter.changePlaybackPositionCommand removeTarget:self action:NULL];
 
-        commandCenter.playCommand.enabled = NO;
-        //[commandCenter.playCommand removeTarget:self action:NULL];
+        [commandCenter.togglePlayPauseCommand setEnabled:false];
 
         [commandCenter.skipForwardCommand removeTarget:self];
         [commandCenter.skipBackwardCommand removeTarget:self];
