@@ -204,46 +204,45 @@ MusicControlsInfo * musicControlsSettings;
 - (void) registerMusicControlsEventListener {
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMusicControlsNotification:) name:@"musicControlsEventNotification" object:nil];
-    /*
+    
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
       //only available in iOS 9.1 and up.
         MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+
         [commandCenter.changePlaybackPositionCommand setEnabled:true];
         [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
-
-        if (musicControlsSettings.hasNext) {
-          MPRemoteCommand *nextTrackCommand = [commandCenter nextTrackCommand];
-          [nextTrackCommand setEnabled:true];
-          [nextTrackCommand addTarget:self action:@selector(nextTrackEvent:)];
-        }
-
-        if (musicControlsSettings.hasPrev) {
-          MPRemoteCommand *prevTrackCommand = [commandCenter previousTrackCommand];
-          [prevTrackCommand setEnabled:true];
-          [prevTrackCommand addTarget:self action:@selector(prevTrackEvent:)];
-        }
-
-        if (musicControlsSettings.hasSkipForward) {
-          MPSkipIntervalCommand *skipForwardIntervalCommand = [commandCenter skipForwardCommand];
-          skipForwardIntervalCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
-          [skipForwardIntervalCommand setEnabled:true];
-          [skipForwardIntervalCommand addTarget:self action:@selector(skipForwardEvent:)];
-        }
-
-        if (musicControlsSettings.hasSkipBackward) {
-          MPSkipIntervalCommand *skipBackwardIntervalCommand = [commandCenter skipBackwardCommand];
-          skipBackwardIntervalCommand.preferredIntervals = @[@(musicControlsSettings.skipBackwardInterval)];
-          [skipBackwardIntervalCommand setEnabled:true];
-          [skipBackwardIntervalCommand addTarget:self action:@selector(skipBackwardEvent:)];
-        }
 
         //maybe we need to ENABLE Play/Pause for it to work!?
         MPRemoteCommandHandlerStatus(^dummyHandler)(MPRemoteCommandEvent *);
          dummyHandler = ^( MPRemoteCommandEvent * event) {
              return MPRemoteCommandHandlerStatusSuccess;
          };
-         [commandCenter.togglePlayPauseCommand addTargetWithHandler:dummyHandler];
-    } */
+
+        [commandCenter.togglePlayPauseCommand setEnabled:true];
+        [commandCenter.togglePlayPauseCommand addTargetWithHandler:dummyHandler];
+
+        if (musicControlsSettings.hasNext) {
+          [commandCenter.nextTrackCommand setEnabled:true];
+          [commandCenter.nextTrackCommand addTarget:self action:@selector(nextTrackEvent:)];
+        }
+
+        if (musicControlsSettings.hasPrev) {
+          [commandCenter.prevTrackCommand setEnabled:true];
+          [commandCenter.prevTrackCommand addTarget:self action:@selector(prevTrackEvent:)];
+        }
+
+        if (musicControlsSettings.hasSkipForward) {
+          commandCenter.skipForwardCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
+          [commandCenter.skipForwardCommand setEnabled:true];
+          [commandCenter.skipForwardCommand addTarget:self action:@selector(skipForwardEvent:)];
+        }
+
+        if (musicControlsSettings.hasSkipBackward) {
+          commandCenter.skipBackwardCommand.preferredIntervals = @[@(musicControlsSettings.skipBackwardInterval)];
+          [commandCenter.skipBackwardCommand setEnabled:true];
+          [commandCenter.skipBackwardCommand addTarget:self action:@selector(skipBackwardEvent:)];
+        }
+    } 
 }
 
 - (MPRemoteCommandHandlerStatus)changedThumbSliderOnLockScreen:(MPChangePlaybackPositionCommandEvent *)event {
