@@ -208,7 +208,6 @@ MusicControlsInfo * musicControlsSettings;
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
       //only available in iOS 9.1 and up.
         MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-
         [commandCenter.changePlaybackPositionCommand setEnabled:true];
         [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
 
@@ -218,31 +217,36 @@ MusicControlsInfo * musicControlsSettings;
              return MPRemoteCommandHandlerStatusSuccess;
          };
 
-        [commandCenter.togglePlayPauseCommand setEnabled:true];
-        [commandCenter.togglePlayPauseCommand addTarget:self action:@selector(nextTrackEvent:)];
+        MPRemoteCommand *togglePlayPauseCommand = [commandCenter togglePlayPauseCommand];
+        [togglePlayPauseCommand setEnabled:YES];
+        [togglePlayPauseCommand addTargetWithHandler:dummyHandler];
 
-        // if (musicControlsSettings.hasNext) {
-        //   [commandCenter.nextTrackCommand setEnabled:true];
-        //   [commandCenter.nextTrackCommand addTarget:self action:@selector(nextTrackEvent:)];
-        // }
+        if (musicControlsSettings.hasNext) {
+          MPRemoteCommand *nextTrackCommand = [commandCenter nextTrackCommand];
+          [nextTrackCommand setEnabled:YES];
+          [nextTrackCommand addTarget:self action:@selector(nextTrackEvent:)];
+        }
 
-        // if (musicControlsSettings.hasPrev) {
-        //   [commandCenter.prevTrackCommand setEnabled:true];
-        //   [commandCenter.prevTrackCommand addTarget:self action:@selector(prevTrackEvent:)];
-        // }
+        if (musicControlsSettings.hasPrev) {
+          MPRemoteCommand *prevTrackCommand = [commandCenter previousTrackCommand];
+          [prevTrackCommand setEnabled:YES];
+          [prevTrackCommand addTarget:self action:@selector(prevTrackEvent:)];
+        }
 
-        // if (musicControlsSettings.hasSkipForward) {
-        //   commandCenter.skipForwardCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
-        //   [commandCenter.skipForwardCommand setEnabled:true];
-        //   [commandCenter.skipForwardCommand addTarget:self action:@selector(skipForwardEvent:)];
-        // }
+        if (musicControlsSettings.hasSkipForward) {
+          MPSkipIntervalCommand *skipForwardIntervalCommand = [commandCenter skipForwardCommand];
+          skipForwardIntervalCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
+          [skipForwardIntervalCommand setEnabled:YES];
+          [skipForwardIntervalCommand addTarget:self action:@selector(skipForwardEvent:)];
+        }
 
-        // if (musicControlsSettings.hasSkipBackward) {
-        //   commandCenter.skipBackwardCommand.preferredIntervals = @[@(musicControlsSettings.skipBackwardInterval)];
-        //   [commandCenter.skipBackwardCommand setEnabled:true];
-        //   [commandCenter.skipBackwardCommand addTarget:self action:@selector(skipBackwardEvent:)];
-        // }
-    } 
+        if (musicControlsSettings.hasSkipBackward) {
+          MPSkipIntervalCommand *skipBackwardIntervalCommand = [commandCenter skipBackwardCommand];
+          skipBackwardIntervalCommand.preferredIntervals = @[@(musicControlsSettings.skipBackwardInterval)];
+          [skipBackwardIntervalCommand setEnabled:YES];
+          [skipBackwardIntervalCommand addTarget:self action:@selector(skipBackwardEvent:)];
+        }
+    }
 }
 
 - (MPRemoteCommandHandlerStatus)changedThumbSliderOnLockScreen:(MPChangePlaybackPositionCommandEvent *)event {
@@ -257,7 +261,7 @@ MusicControlsInfo * musicControlsSettings;
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedEvent" object:nil];
     [self setLatestEventCallbackId:nil];
-    /*
+
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
         MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
         [commandCenter.changePlaybackPositionCommand setEnabled:false];
@@ -268,7 +272,7 @@ MusicControlsInfo * musicControlsSettings;
 
         [commandCenter.nextTrackCommand removeTarget:self];
         [commandCenter.previousTrackCommand removeTarget:self];
-    } */
+    }
 }
 
 - (void) dealloc {
