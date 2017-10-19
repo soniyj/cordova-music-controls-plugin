@@ -240,6 +240,7 @@ MusicControlsInfo * musicControlsSettings;
         //maybe we need to ENABLE Play/Pause for it to work!?
         MPRemoteCommand *togglePlayPauseCommand = [commandCenter togglePlayPauseCommand];
         [togglePlayPauseCommand setEnabled:YES];
+        [togglePlayPauseCommand addTarget:self action:@selector(nextTrackEvent:)];
     } 
 }
 
@@ -262,6 +263,7 @@ MusicControlsInfo * musicControlsSettings;
         [commandCenter.changePlaybackPositionCommand removeTarget:self action:NULL];
 
         [commandCenter.togglePlayPauseCommand setEnabled:false];
+        [commandCenter.togglePlayPauseCommand removeTarget:self action:NULL];
 
         [commandCenter.skipForwardCommand removeTarget:self];
         [commandCenter.skipBackwardCommand removeTarget:self];
