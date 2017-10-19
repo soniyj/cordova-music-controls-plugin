@@ -213,13 +213,13 @@ MusicControlsInfo * musicControlsSettings;
         [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
 
         //maybe we need to ENABLE Play/Pause for it to work!?
-        MPRemoteCommandHandlerStatus(^dummyHandler)(MPRemoteCommandEvent *);
-         dummyHandler = ^( MPRemoteCommandEvent * event) {
-             return MPRemoteCommandHandlerStatusSuccess;
-         };
+        // MPRemoteCommandHandlerStatus(^dummyHandler)(MPRemoteCommandEvent *);
+        //  dummyHandler = ^( MPRemoteCommandEvent * event) {
+        //      return MPRemoteCommandHandlerStatusSuccess;
+        //  };
 
         [commandCenter.togglePlayPauseCommand setEnabled:true];
-        [commandCenter.togglePlayPauseCommand addTargetWithHandler:dummyHandler];
+        [commandCenter.togglePlayPauseCommand addTarget:self action:@selector(nextTrackEvent:)];
 
         if (musicControlsSettings.hasNext) {
           [commandCenter.nextTrackCommand setEnabled:true];
