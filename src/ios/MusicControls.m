@@ -213,34 +213,36 @@ MusicControlsInfo * musicControlsSettings;
 
         if (musicControlsSettings.hasNext) {
           MPRemoteCommand *nextTrackCommand = [commandCenter nextTrackCommand];
-          [nextTrackCommand setEnabled:YES];
+          [nextTrackCommand setEnabled:true];
           [nextTrackCommand addTarget:self action:@selector(nextTrackEvent:)];
         }
 
         if (musicControlsSettings.hasPrev) {
           MPRemoteCommand *prevTrackCommand = [commandCenter previousTrackCommand];
-          [prevTrackCommand setEnabled:YES];
+          [prevTrackCommand setEnabled:true];
           [prevTrackCommand addTarget:self action:@selector(prevTrackEvent:)];
         }
 
         if (musicControlsSettings.hasSkipForward) {
           MPSkipIntervalCommand *skipForwardIntervalCommand = [commandCenter skipForwardCommand];
           skipForwardIntervalCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
-          [skipForwardIntervalCommand setEnabled:YES];
+          [skipForwardIntervalCommand setEnabled:true];
           [skipForwardIntervalCommand addTarget:self action:@selector(skipForwardEvent:)];
         }
 
         if (musicControlsSettings.hasSkipBackward) {
           MPSkipIntervalCommand *skipBackwardIntervalCommand = [commandCenter skipBackwardCommand];
           skipBackwardIntervalCommand.preferredIntervals = @[@(musicControlsSettings.skipBackwardInterval)];
-          [skipBackwardIntervalCommand setEnabled:YES];
+          [skipBackwardIntervalCommand setEnabled:true];
           [skipBackwardIntervalCommand addTarget:self action:@selector(skipBackwardEvent:)];
         }
 
         //maybe we need to ENABLE Play/Pause for it to work!?
-        //MPRemoteCommand *togglePlayPauseCommand = [commandCenter togglePlayPauseCommand];
-        //[togglePlayPauseCommand setEnabled:YES];
-        //[togglePlayPauseCommand addTarget:self action:@selector(nextTrackEvent:)];
+        MPRemoteCommandHandlerStatus(^dummyHandler)(MPRemoteCommandEvent *);
+         dummyHandler = ^( MPRemoteCommandEvent * event) {
+             return MPRemoteCommandHandlerStatusSuccess;
+         };
+         [commandCenter.togglePlayPauseCommand addTargetWithHandler:dummyHandler];
     } 
 }
 
@@ -261,9 +263,6 @@ MusicControlsInfo * musicControlsSettings;
         MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
         [commandCenter.changePlaybackPositionCommand setEnabled:false];
         [commandCenter.changePlaybackPositionCommand removeTarget:self action:NULL];
-
-        [commandCenter.togglePlayPauseCommand setEnabled:false];
-        [commandCenter.togglePlayPauseCommand removeTarget:self action:NULL];
 
         [commandCenter.skipForwardCommand removeTarget:self];
         [commandCenter.skipBackwardCommand removeTarget:self];
