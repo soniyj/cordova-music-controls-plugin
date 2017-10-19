@@ -213,10 +213,10 @@ MusicControlsInfo * musicControlsSettings;
         [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
 
         //maybe we need to ENABLE Play/Pause for it to work!?
-        // MPRemoteCommandHandlerStatus(^dummyHandler)(MPRemoteCommandEvent *);
-        //  dummyHandler = ^( MPRemoteCommandEvent * event) {
-        //      return MPRemoteCommandHandlerStatusSuccess;
-        //  };
+        MPRemoteCommandHandlerStatus(^dummyHandler)(MPRemoteCommandEvent *);
+         dummyHandler = ^( MPRemoteCommandEvent * event) {
+             return MPRemoteCommandHandlerStatusSuccess;
+         };
 
         [commandCenter.togglePlayPauseCommand setEnabled:true];
         [commandCenter.togglePlayPauseCommand addTarget:self action:@selector(nextTrackEvent:)];
@@ -231,17 +231,17 @@ MusicControlsInfo * musicControlsSettings;
           [commandCenter.prevTrackCommand addTarget:self action:@selector(prevTrackEvent:)];
         }
 
-        if (musicControlsSettings.hasSkipForward) {
-          commandCenter.skipForwardCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
-          [commandCenter.skipForwardCommand setEnabled:true];
-          [commandCenter.skipForwardCommand addTarget:self action:@selector(skipForwardEvent:)];
-        }
+        // if (musicControlsSettings.hasSkipForward) {
+        //   commandCenter.skipForwardCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
+        //   [commandCenter.skipForwardCommand setEnabled:true];
+        //   [commandCenter.skipForwardCommand addTarget:self action:@selector(skipForwardEvent:)];
+        // }
 
-        if (musicControlsSettings.hasSkipBackward) {
-          commandCenter.skipBackwardCommand.preferredIntervals = @[@(musicControlsSettings.skipBackwardInterval)];
-          [commandCenter.skipBackwardCommand setEnabled:true];
-          [commandCenter.skipBackwardCommand addTarget:self action:@selector(skipBackwardEvent:)];
-        }
+        // if (musicControlsSettings.hasSkipBackward) {
+        //   commandCenter.skipBackwardCommand.preferredIntervals = @[@(musicControlsSettings.skipBackwardInterval)];
+        //   [commandCenter.skipBackwardCommand setEnabled:true];
+        //   [commandCenter.skipBackwardCommand addTarget:self action:@selector(skipBackwardEvent:)];
+        // }
     } 
 }
 
