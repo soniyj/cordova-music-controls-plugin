@@ -221,15 +221,15 @@ MusicControlsInfo * musicControlsSettings;
         [commandCenter.togglePlayPauseCommand setEnabled:true];
         [commandCenter.togglePlayPauseCommand addTarget:self action:@selector(nextTrackEvent:)];
 
-        if (musicControlsSettings.hasNext) {
-          [commandCenter.nextTrackCommand setEnabled:true];
-          [commandCenter.nextTrackCommand addTarget:self action:@selector(nextTrackEvent:)];
-        }
+        // if (musicControlsSettings.hasNext) {
+        //   [commandCenter.nextTrackCommand setEnabled:true];
+        //   [commandCenter.nextTrackCommand addTarget:self action:@selector(nextTrackEvent:)];
+        // }
 
-        if (musicControlsSettings.hasPrev) {
-          [commandCenter.prevTrackCommand setEnabled:true];
-          [commandCenter.prevTrackCommand addTarget:self action:@selector(prevTrackEvent:)];
-        }
+        // if (musicControlsSettings.hasPrev) {
+        //   [commandCenter.prevTrackCommand setEnabled:true];
+        //   [commandCenter.prevTrackCommand addTarget:self action:@selector(prevTrackEvent:)];
+        // }
 
         // if (musicControlsSettings.hasSkipForward) {
         //   commandCenter.skipForwardCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
