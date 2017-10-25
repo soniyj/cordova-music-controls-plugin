@@ -31,6 +31,10 @@
 - (void) handleMusicControlsNotification:(NSNotification *) notification;
 - (void) registerMusicControlsEventListener;
 - (void) deregisterMusicControlsEventListener;
+- (void) playPauseEvent:(MPRemoteCommandEvent *) event;
+- (void) playEvent:(MPRemoteCommandEvent *)event;
+- (void) pauseEvent:(MPRemoteCommandEvent *)event;
+- (void) initCtrl;
 
 @end
 

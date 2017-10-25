@@ -86,9 +86,7 @@ MusicControlsInfo * musicControlsSettings;
 }
 
 - (void) watch: (CDVInvokedUrlCommand *) command {
-    NSLog(@"Watch-0");
     [self setLatestEventCallbackId:command.callbackId];
-    NSLog(@"Watch-1");
     [self registerMusicControlsEventListener];
 }
 
@@ -223,7 +221,8 @@ MusicControlsInfo * musicControlsSettings;
 }
 
 - (void) registerMusicControlsEventListener {
-    //[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMusicControlsNotification:) name:@"musicControlsEventNotification" object:nil];
     
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
         MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];

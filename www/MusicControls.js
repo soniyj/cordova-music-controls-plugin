@@ -45,12 +45,18 @@ var musicControls = {
   },
   // Start listening for events
   listen: function () {
+    console.log('MS.JS.listen');
     cordova.exec(musicControls.receiveCallbackFromNative, function (res) {
+      console.log('listen.res', res);
     }, 'MusicControls', 'watch', []);
   },
   receiveCallbackFromNative: function (messageFromNative) {
+    console.log('MS.JS.rcbfn.0', messageFromNative);
+    console.log('MS.JS.rcbfn.0-1', musicControls.updateCallback);
     musicControls.updateCallback(messageFromNative);
+    console.log('MS.JS.rcbfn.1', messageFromNative);
     cordova.exec(musicControls.receiveCallbackFromNative, function (res) {
+      console.log('rcbfn.res', res);
     }, 'MusicControls', 'watch', []);
   }
 
